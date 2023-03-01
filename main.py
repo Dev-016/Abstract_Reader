@@ -6,6 +6,22 @@ import api_key
 openai.api_key = api_key.API_KEY
 
 
+def read_excel():
+    pass
+
+
+def extract_title():
+    pass
+
+
+def extract_abstract():
+    pass
+
+
+def create_prompt():
+    pass
+
+
 def gen_response(prompt):
     response = openai.Completion.create(model="text-davinci-003",
                                         prompt=prompt,
@@ -19,8 +35,8 @@ def response_text(response):
 
 
 if __name__ == '__main__':
-    prompt = "What is 2+2?"
-    res = gen_response(prompt)
+    prompt_ = "What is 2+2?"
+    res = gen_response(prompt_)
     print(f">>> BEGIN: \n"
-          f"Me: {prompt}\n"
+          f"Me: {prompt_}\n"
           f"text-davinci-003: {response_text(res).strip()}")
