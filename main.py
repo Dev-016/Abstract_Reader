@@ -30,7 +30,7 @@ def extract_ta_pairs():
 def create_prompt(title, abstract):
     user_topic = f'generating or extracting a collection of related words'
     return f"Determine whether this abstract '{abstract}' from the paper '{title}'." \
-           f"Describes, includes or relates to '{user_topic}'," \
+           f" Describes, includes or relates to '{user_topic}'," \
            f" you must start your answer with the word 'yes' or 'no' and then your detailed reasoning.'"
 
 
