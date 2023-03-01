@@ -1,3 +1,4 @@
+# Author: Lee Taylor
 import os
 import openai
 import api_key
@@ -9,31 +10,28 @@ openai.api_key = api_key.API_KEY
 
 
 '''
-def read_excel(file_path):
-    df = pd.read_excel("Excels/Lexicon_Construction.xlsx")
-    print(df)
+The purpose of this project is to speed up a bibliographic review of literature. 
+Please the view the README.md for more information.
 '''
 
 
-def read_excel():
+def extract_ta_pairs():
+    """
+    This function reads the .xlsx into a dataframe (DF).
+    The paper titles and abstracts are extracted from the DF into
+     a list of tuple pairs.
+    """
     df = pd.read_excel("Excels/Lexicon_Construction.xlsx")
     doc_title = df['Document Title'].tolist()
     abstracts = df['Abstract'].tolist()
-    pairs = [(t, a) for t, a in zip(doc_title, abstracts)]
-    for pair in pairs:
-        print(pair)
+    return [(t, a) for t, a in zip(doc_title, abstracts)]
 
 
-def extract_title():
-    pass
-
-
-def extract_abstract():
-    pass
-
-
-def create_prompt():
-    pass
+def create_prompt(title, abstract):
+    user_topic = f'generating or extracting a collection of related words'
+    return f"Determine whether this abstract '{abstract}' from the paper '{title}'." \
+           f"Describes, includes or relates to '{user_topic}'," \
+           f" you must start your answer with the word 'yes' or 'no' and then your detailed reasoning.'"
 
 
 def gen_response(prompt):
@@ -49,9 +47,10 @@ def response_text(response):
 
 
 def print_fio(prompt, res):
-    print(f">>> BEGIN: \n"
+    print(f">>> BEGIN <<< \n"
           f"Me: {prompt}\n"
-          f"text-davinci-003: {response_text(res).strip()}")
+          f"text-davinci-003: {response_text(res).strip()}\n"
+          f">>> END <<< \n")
 
 
 if __name__ == '__main__':
@@ -60,5 +59,11 @@ if __name__ == '__main__':
     # res_ = gen_response(prompt_)
     # print_fio(prompt_, res_)
 
-    # Test reading
-    read_excel()
+    # Title-Abstract pairs
+    pairs = extract_ta_pairs()
+
+    # Generate response for each pair
+    for title, abstract in pairs[80:90]:
+        prompt_ = create_prompt(title, abstract)
+        res = gen_response(prompt_)
+        print_fio(prompt_, res)
