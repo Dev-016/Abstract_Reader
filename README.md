@@ -8,7 +8,7 @@ a paper does or does not describe or include the user's intended topic.
 
 # Example Output
 
-C:\Users\********\PycharmProjects\Abstract_Reader_\venv\Scripts\python.exe C:\Users\********\PycharmProjects\Abstract_Reader_\main.py  
+C:\Users\--------\PycharmProjects\Abstract_Reader_\venv\Scripts\python.exe C:\Users\--------\PycharmProjects\Abstract_Reader_\main.py  
 
 [BEGIN]  
 Me: Determine whether this abstract 'In the paper an automated approach for construction of the terminological 
