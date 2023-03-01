@@ -75,3 +75,6 @@ if __name__ == '__main__':
         res_ = gen_response(prompt_)
         print_fio(prompt_, res_)
         cols_.append(response_text(res_).strip().split()[0])
+
+    # Todo: Generate a .csv file with the first column being the 'yes' or 'no'
+    #  from the text-davinci-003 model response
