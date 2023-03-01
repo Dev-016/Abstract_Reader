@@ -47,10 +47,10 @@ def response_text(response):
 
 
 def print_fio(prompt, res):
-    print(f">>> BEGIN <<< \n"
+    print(f"[BEGIN]\n"
           f"Me: {prompt}\n"
           f"text-davinci-003: {response_text(res).strip()}\n"
-          f">>> END <<< \n")
+          f"[END]\n")
 
 
 if __name__ == '__main__':
@@ -65,5 +65,5 @@ if __name__ == '__main__':
     # Generate response for each pair
     for title, abstract in pairs[80:90]:
         prompt_ = create_prompt(title, abstract)
-        res = gen_response(prompt_)
-        print_fio(prompt_, res)
+        res_ = gen_response(prompt_)
+        print_fio(prompt_, res_)
