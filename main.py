@@ -90,7 +90,8 @@ if __name__ == '__main__':
         res_1 = gen_response(prompt_1)
         res_2 = gen_response(prompt_2)
         # Out response
-        # print_fio(prompt_, res_)
+        print_fio(prompt_1, res_)
+        print_fio(prompt_2, res_)
         # Update storage for later to write to .csv
         data_r1.append([response_text(res_1).strip().split()[0], title_, abstract_, pdf_link])
         data_r1.append([response_text(res_2).strip().split()[0], title_, abstract_, pdf_link])
@@ -100,4 +101,3 @@ if __name__ == '__main__':
 
     # Write to .csv file
     write_to_csv('output_r1.csv', data)
-
