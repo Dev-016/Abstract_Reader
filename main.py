@@ -8,6 +8,7 @@ import openai
 import api_key  # Create a file called
 import pandas as pd
 import csv
+import time
 
 
 # Load your API key from an environment variable or secret management service
@@ -87,17 +88,26 @@ if __name__ == '__main__':
         prompt_1 = create_prompt(title_, abstract_, 1, user_topic_)
         prompt_2 = create_prompt(title_, abstract_, 2, user_topic_)
         # Generate response
-        res_1 = gen_response(prompt_1)
-        res_2 = gen_response(prompt_2)
-        # Out response
-        print_fio(prompt_1, res_)
-        print_fio(prompt_2, res_)
-        # Update storage for later to write to .csv
-        data_r1.append([response_text(res_1).strip().split()[0], title_, abstract_, pdf_link])
-        data_r1.append([response_text(res_2).strip().split()[0], title_, abstract_, pdf_link])
-
-    # Todo: Generate a .csv file with the first column being the 'yes' or 'no'
-    #  from the text-davinci-003 model response
-
+        try:
+            res_1 = gen_response(prompt_1)
+            res_2 = gen_response(prompt_2)
+            # Out response
+            print_fio(prompt_1, res_1)
+            print_fio(prompt_2, res_2)
+            # Split reasoning from model response
+            reasoning_1 = response_text(res_1).strip().split('.', 1)[1].strip()
+            reasoning_2 = response_text(res_2).strip().split('.', 1)[1].strip()
+            # Update storage for later to write to .csv
+            data_r1.append([response_text(res_1).strip().split()[0], reasoning_1, title_, abstract_, pdf_link])
+            data_r2.append([response_text(res_2).strip().split()[0], reasoning_2, title_, abstract_, pdf_link])
+        except:
+            # Wait for any OpenAI connection/rate errors to resolve
+            time.sleep(30)
+            # Append errors to indicate which papers require manual reading
+            data_r1.append(['N/A', 'N/A', title_, abstract_, pdf_link])
+            data_r2.append(['N/A', 'N/A', title_, abstract_, pdf_link])
+            # Mark EO try-except
+            pass
     # Write to .csv file
-    write_to_csv('output_r1.csv', data)
+    write_to_csv('output_r1.csv', data_r1)
+    write_to_csv('output_r2.csv', data_r2)
