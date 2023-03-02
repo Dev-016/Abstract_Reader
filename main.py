@@ -64,10 +64,15 @@ def print_fio(prompt, res):
           f"[END]\n")
 
 
-def write_to_csv(filename, data):
-    with open(filename, 'w', newline='') as f:
+def write_to_csv(file_path, data):
+    with open(file_path, 'w', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerows(data)
+        for line in data:
+            try:
+                writer.writerow(line)
+            except Exception as e:
+                writer.writerow(['Failed', 'Failed', 'Failed', 'Failed', 'Failed'])
+
 
 
 if __name__ == '__main__':
